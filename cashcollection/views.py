@@ -42,19 +42,14 @@ def all_classes(request):
     rec = requests.get(url,headers=header)
     tr_table = []
 
-    data = rec.json()
-    if data['status'] is False:
-        return HttpResponse(data['message'])
-    # if rec.status_code == 200:
-
-    #     result = rec.json()
-    #     if result["status"] == True:
-    #         tr_table = result['data']['data']
-    #         print("this thekkkkkkkkkkkkkk",tr_table)
+    if rec.status_code == 200:
+        result = rec.json()
+        if result["status"] == True:
+            tr_table = result['data']['data']
+            print("this thekkkkkkkkkkkkkk",tr_table)
             # totalcount = result['data']["totalPages"]
     else:
-        tr_table = result['data']['data']
-        # return JsonResponse([{"message":"error","code":rec.status_code}],safe=False)
+        return JsonResponse([{"message":"error","code":rec.status_code}],safe=False)
     context={
         "table":tr_table,
     }
