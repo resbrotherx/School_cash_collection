@@ -13,6 +13,7 @@ urlpatterns = [
     path('log', views.log, name="log"),
     path('dashboard/', views.dashboard, name="dashboard"),
     path('all_student', views.all_student, name="all_student"),
+    path('all_class/', views.all_classes, name="all_classes"),
     path('create_student', views.create_student, name="create_student"),
     # path('contact/', views.contact, name="contact"),
     # path('news_detail/<id>/', views.news_detail, name='news_detail'),

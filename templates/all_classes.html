@@ -1,0 +1,68 @@
+﻿{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<!-- Main Content -->
+<section class="content">
+    <div class="block-header">
+        <div class="row">
+            <div class="col-lg-7 col-md-6 col-sm-12">
+                <h2>All Courses
+                <small>Welcome to Oreo</small>
+                </h2>
+            </div>
+            <div class="col-lg-5 col-md-6 col-sm-12">                
+                <button class="btn btn-white btn-icon btn-round float-right m-l-10" type="button">
+                    <i class="zmdi zmdi-plus"></i>
+                </button>
+                <ul class="breadcrumb float-md-right">
+                    <li class="breadcrumb-item"><a href="index.html"><i class="zmdi zmdi-home"></i> Oreo</a></li>
+                    <li class="breadcrumb-item"><a href="javascript:void(0);">Courses</a></li>
+                    <li class="breadcrumb-item active">All</li>
+                </ul>                
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row clearfix">
+        {% for i in table %}
+            <div class="col-md-6 col-lg-4">
+                <div class="card">
+                    <div class="body">
+                        <img src="{% static 'assets/images/image1.jpg'%}" alt=""  class="img-fluid rounded m-b-20">
+                        <h6>{{i.name}}</h6>
+                        {% comment %} <div class="table-responsive">
+                            <table class="table table-hover m-t-20">
+                                <tbody>
+                                    <tr>
+                                        <td>Year</td>
+                                        <td>MCA Sem2</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Fees</td>
+                                        <td><strong class="col-blush">$315.60</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Prof NAME</td>
+                                        <td><strong>Will Smith</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Students</td>
+                                        <td><strong class="col-green">115</strong></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <a href="courses-info.html" class="btn btn-block btn-raised btn-default btn-simple btn-round waves-effect" role="button">Read more</a> {% endcomment %}
+                    </div>
+                </div>
+            </div>
+         {%endfor %}
+                   
+            <div class="col-sm-12 text-center">
+                <a href="javascript:void(0);" class="btn btn-raised waves-effect btn-round btn-primary" role="button">Load more</a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}

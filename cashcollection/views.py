@@ -35,6 +35,31 @@ def dashboard(request):
 def create_class(request):
     return render(request,"add-class.html")
 
+def all_classes(request):
+    request.session['token'] = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZW1haWwiOiJ0b255MTIzQGdtYWlsLmNvbSIsInJvbGUiOiJTY2hvb2wiLCJpYXQiOjE2Nzg3ODcwNDgsImV4cCI6MTY3ODc5MDY0OH0.MGzx--3bm20o9-zoZ4uDWwluDoYQhST8KZXbWN4Rwx0"
+    url = "http://188.166.99.136:5002/config/get-classes"
+    header = {'Authorization':"Bearer %s" % (request.session['token']),'Content-type':'application/json'}
+    rec = requests.get(url,headers=header)
+    tr_table = []
+
+    data = rec.json()
+    if data['status'] is False:
+        return HttpResponse(data['message'])
+    # if rec.status_code == 200:
+
+    #     result = rec.json()
+    #     if result["status"] == True:
+    #         tr_table = result['data']['data']
+    #         print("this thekkkkkkkkkkkkkk",tr_table)
+            # totalcount = result['data']["totalPages"]
+    else:
+        tr_table = result['data']['data']
+        # return JsonResponse([{"message":"error","code":rec.status_code}],safe=False)
+    context={
+        "table":tr_table,
+    }
+    return render(request,"all_classes.html",context)
+
 def all_student(request):
     request.session['token'] = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZW1haWwiOiJ0b255MTIzQGdtYWlsLmNvbSIsInJvbGUiOiJTY2hvb2wiLCJpYXQiOjE2Nzg3ODcwNDgsImV4cCI6MTY3ODc5MDY0OH0.MGzx--3bm20o9-zoZ4uDWwluDoYQhST8KZXbWN4Rwx0"
     url = "http://188.166.99.136:5002/students/get-students"
@@ -103,9 +128,12 @@ def creat_class_api(request):
         if class_name == "":
             respons = 'Error! Please enter class_name its required !!'
         else:
+            request.session['token'] = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZW1haWwiOiJ0b255MTIzQGdtYWlsLmNvbSIsInJvbGUiOiJTY2hvb2wiLCJpYXQiOjE2Nzg3ODcwNDgsImV4cCI6MTY3ODc5MDY0OH0.MGzx--3bm20o9-zoZ4uDWwluDoYQhST8KZXbWN4Rwx0"
             url = "http://188.166.99.136:5002/config/create-class"
+            header = {'Authorization':"Bearer %s" % (request.session['token']),'Content-type':'application/json'}
+            
             files = {"name":class_name}
-            res = requests.post(url,headers={'Content-type':'application/json'},json=files)
+            res = requests.post(url,headers=header,json=files)
             try:
                 if res.status_code == 200:
                     data = res.json()

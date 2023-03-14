@@ -44,6 +44,7 @@
                     </div>
                     <div class="body">
                     <form method="post">
+                    {% csrf_token %} 
                         {% comment %} <div class="row clearfix">
                             <div class="col-sm-12">
                                 <div class="form-group">
@@ -70,7 +71,7 @@
                                 </div>
                             </div>
                             <div class="col-sm-12">
-                                <button type="submit" id="submitsignin" class="btn btn-raised btn-round btn-primary">Submit</button>
+                                <button type="button" id="submitsignin" class="btn btn-raised btn-round btn-primary">Submit</button>
                                 <button type="submit" class="btn btn-raised btn-round btn-default">Cancel</button>
                             </div>
                         </div>
