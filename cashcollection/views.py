@@ -36,18 +36,16 @@ def create_class(request):
     return render(request,"add-class.html")
 
 def all_classes(request):
-    request.session['token'] = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZW1haWwiOiJ0b255MTIzQGdtYWlsLmNvbSIsInJvbGUiOiJTY2hvb2wiLCJpYXQiOjE2Nzg3ODcwNDgsImV4cCI6MTY3ODc5MDY0OH0.MGzx--3bm20o9-zoZ4uDWwluDoYQhST8KZXbWN4Rwx0"
+    request.session['token'] = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZW1haWwiOiJ0b255MTIzQGdtYWlsLmNvbSIsInJvbGUiOiJTY2hvb2wiLCJpYXQiOjE2Nzg4NjU3NDcsImV4cCI6MTY3ODg2OTM0N30.qmQNJarrWlL5-UX_D1i8RhyP12EIIgSF4JwOJYmzCB8"
     url = "http://188.166.99.136:5002/config/get-classes"
     header = {'Authorization':"Bearer %s" % (request.session['token']),'Content-type':'application/json'}
     rec = requests.get(url,headers=header)
-    tr_table = []
+    # tr_table = []
 
     if rec.status_code == 200:
         result = rec.json()
         if result["status"] == True:
-            tr_table = result['data']['data']
-            print("this thekkkkkkkkkkkkkk",tr_table)
-            # totalcount = result['data']["totalPages"]
+            tr_table = result['data']
     else:
         return JsonResponse([{"message":"error","code":rec.status_code}],safe=False)
     context={
@@ -56,17 +54,18 @@ def all_classes(request):
     return render(request,"all_classes.html",context)
 
 def all_student(request):
-    request.session['token'] = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZW1haWwiOiJ0b255MTIzQGdtYWlsLmNvbSIsInJvbGUiOiJTY2hvb2wiLCJpYXQiOjE2Nzg3ODcwNDgsImV4cCI6MTY3ODc5MDY0OH0.MGzx--3bm20o9-zoZ4uDWwluDoYQhST8KZXbWN4Rwx0"
+    request.session['token'] = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZW1haWwiOiJ0b255MTIzQGdtYWlsLmNvbSIsInJvbGUiOiJTY2hvb2wiLCJpYXQiOjE2Nzg4NjEwNjAsImV4cCI6MTY3ODg2NDY2MH0.MNH8o-hx4AA_fzkLgp0K8Q-qVKTfDDCaBkru3uSipwM"
     url = "http://188.166.99.136:5002/students/get-students"
     header = {'Authorization':"Bearer %s" % (request.session['token']),'Content-type':'application/json'}
     rec = requests.get(url,headers=header)
-    tr_table = []
+    # tr_table = []
 
     if rec.status_code == 200:
         result = rec.json()
         if result["status"] == True:
-            tr_table = result['data']['data']
-            print("this thekkkkkkkkkkkkkk",tr_table)
+            # print("this the result here thanks",result)
+            # print("this the result here thanks",result['data'])
+            tr_table = result['data'] 
             # totalcount = result['data']["totalPages"]
     else:
         return JsonResponse([{"message":"error","code":rec.status_code}],safe=False)
@@ -123,18 +122,53 @@ def creat_class_api(request):
         if class_name == "":
             respons = 'Error! Please enter class_name its required !!'
         else:
-            request.session['token'] = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZW1haWwiOiJ0b255MTIzQGdtYWlsLmNvbSIsInJvbGUiOiJTY2hvb2wiLCJpYXQiOjE2Nzg3ODcwNDgsImV4cCI6MTY3ODc5MDY0OH0.MGzx--3bm20o9-zoZ4uDWwluDoYQhST8KZXbWN4Rwx0"
+            request.session['token'] = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZW1haWwiOiJ0b255MTIzQGdtYWlsLmNvbSIsInJvbGUiOiJTY2hvb2wiLCJpYXQiOjE2Nzg4NjUzMjEsImV4cCI6MTY3ODg2ODkyMX0.PIMqETKj7GQ2S-e5TRpoYC_CJ9eAkPDxiOLDWoC_ac0"
             url = "http://188.166.99.136:5002/config/create-class"
             header = {'Authorization':"Bearer %s" % (request.session['token']),'Content-type':'application/json'}
             
             files = {"name":class_name}
             res = requests.post(url,headers=header,json=files)
             try:
-                if res.status_code == 200:
+                if res.status_code == 201:
                     data = res.json()
-                    respons = "Class was created Successfully"
+                    return HttpResponse("Class was created Successfully")
                 else:
-                    respons = "",data["message"]
+                    return HttpResponse("Error",data["message"])
             except Exception as e:
                 respons = str(e)
-        return HttpResponse(respons)
+        
+
+
+
+
+
+def creat_student_api(request):
+    if request.method == 'POST':
+        first_name = request.POST['first_name']
+        middle_name = request.POST['middle_name']
+        last_name = request.POST['last_name']
+        debt = request.POST['debt']
+
+        if first_name == "" or last_name == "":
+            return HttpResponse('Error! Please enter first_name and last_name its required !!')
+        else:
+            request.session['token'] = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZW1haWwiOiJ0b255MTIzQGdtYWlsLmNvbSIsInJvbGUiOiJTY2hvb2wiLCJpYXQiOjE2Nzg4NjEwNjAsImV4cCI6MTY3ODg2NDY2MH0.MNH8o-hx4AA_fzkLgp0K8Q-qVKTfDDCaBkru3uSipwM"
+            url = "http://188.166.99.136:5002/students/create-student"
+            header = {'Authorization':"Bearer %s" % (request.session['token']),'Content-type':'application/json'}
+            
+            files = {
+                "first_name": first_name,
+                "middle_name": middle_name,
+                "last_name": last_name,
+                "debt": debt,
+                }
+            res = requests.post(url,headers=header,json=files)
+            try:
+                if res.status_code == 201:
+                    data = res.json()
+                    return HttpResponse("Student has been created Successfully")
+                else:
+                    return HttpResponse(data["message"])
+            except Exception as e:
+                respons = str(e)
+        

@@ -46,26 +46,28 @@
                             <table class="table table-hover m-b-0">
                                 <thead>
                                     <tr>                                       
-                                        <th>Media</th>
+                                        <th>Profile</th>
                                         <th>ID</th>
-                                        <th>Name</th>
-                                        <th>Age</th>
-                                        <th>Address</th>
-                                        <th>Number</th>
-                                        <th>Department</th>
+                                        <th>First Name</th>
+                                        <th>Last Name</th>
+                                        <th>Middle Name</th>
+                                        <th>Debt</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    {% for i in table %}
                                     <tr>
                                         <td><span class="list-icon"><img class="rounded" src="assets/images/xs/avatar1.jpg" alt=""></span></td>
-                                        <td><span class="list-name">OU 00456</span></td>
-                                        <td>Joseph</td>
-                                        <td>25</td>
-                                        <td>70 Bowman St. South Windsor, CT 06074</td>
-                                        <td>404-447-6013</td>
-                                        <td><span class="badge badge-primary">MCA</span></td>
+                                        <td><span class="list-name">{{i.id}}</span></td>
+                                        <td>{{i.first_name}}</td>
+                                        <td>{{i.last_name}}</td>
+                                        <td>{{i.middle_name}}</td>
+                                        <td>{{i.debt}}</td>
+                                        <td><span class="badge badge-info">Edith</span></td>
                                     </tr>
-                                    <tr>
+                                    {% endfor %}
+                                    {% comment %} <tr>
                                         <td><span class="list-icon"><img class="rounded" src="assets/images/xs/avatar2.jpg" alt=""></span></td>
                                         <td><span class="list-name">KU 00789</span></td>
                                         <td>Cameron</td>
@@ -145,7 +147,7 @@
                                         <td>123 6th St. Melbourne, FL 32904</td>
                                         <td>404-447-9632</td>										
                                         <td><span class="badge badge-success">BBA</span></td>
-                                    </tr>
+                                    </tr> {% endcomment %}
                                 </tbody>
                             </table>
                         </div>

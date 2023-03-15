@@ -10,6 +10,7 @@ urlpatterns = [
     path('create', views.create, name="create"),
     path('create_class', views.create_class, name="create_class"),
     path('creat_class_api', views.creat_class_api, name="creat_class_api"),
+    path('creat_student_api', views.creat_student_api, name="creat_student_api"),
     path('log', views.log, name="log"),
     path('dashboard/', views.dashboard, name="dashboard"),
     path('all_student', views.all_student, name="all_student"),
